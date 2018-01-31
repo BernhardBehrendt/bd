@@ -29,7 +29,7 @@ let queueName = 'potential-ids',
 
                 connection.close();
                 process.exit(0);
-            }, 60000);
+            }, 60000 * 10);
         }
     };
 
@@ -58,6 +58,6 @@ amqp
                     channel.assertQueue(queueName, {durable: true});
                     console.log('Send to queue');
 
-                    pushToQueue(27294889, channel, connection);
+                    pushToQueue(1, channel, connection);
                 });
         });

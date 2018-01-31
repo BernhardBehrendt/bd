@@ -13,6 +13,7 @@
     "@types/request-promise-native": "^1.0.12",
     "amqplib": "^0.5.2",
     "cheerio": "^1.0.0-rc.2",
+    "concurrently": "^3.5.1",
     "nodemon": "^1.14.11",
     "puppeteer": "https://github.com/GoogleChrome/puppeteer#master",
     "request": "^2.83.0",
@@ -21,12 +22,12 @@
     "typescript": "^2.6.2"
   },
   "scripts": {
-    "develop": "./node_modules/.bin/nodemon -L -e ts",
+    "work": "concurrently \"yarn source:potentials\" \"yarn source:verify\"",
 
+    "develop": "./node_modules/.bin/nodemon -L -e ts",
     "source:potentials": "./node_modules/.bin/ts-node ./queue/queue-push-potential-ids.ts",
     "source:verify": "./node_modules/.bin/ts-node ./queue/queue-pull-potential-ids-and-determine-head-ok-then-push-to-verified-queue.ts",
     "source:fetch": "./node_modules/.bin/ts-node ./queue/queue-push.ts",
-
     "queue-push": "./node_modules/.bin/ts-node ./queue/queue-push.ts",
     "queue-pull": "./node_modules/.bin/ts-node ./queue/queue-pull.ts"
   }
