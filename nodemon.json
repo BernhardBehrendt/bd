@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "src/*.ts",
+    "src/**/*.ts"
+  ],
+  "ignore": [
+    "src/**/*.spec.ts"
+  ],
+  "exec": "./node_modules/.bin/ts-node $NODE_DEBUG_OPTION  --cache-directory .tscache src/app.ts"
+}
