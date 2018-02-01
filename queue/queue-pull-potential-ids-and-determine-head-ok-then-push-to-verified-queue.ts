@@ -55,9 +55,15 @@ let pullQueueName: string = 'potential-ids',
         }).catch((error) => {
 
             if (parseInt(error.message, 10) !== 302) {
-                process.send(process.pid);
-                process.send(error);
-                process.exit(0);
+
+                pullChannel.reject(message);
+
+                setTimeout(() => {
+                    process.send(process.pid);
+                    process.send(error);
+                    process.exit(0);
+                }, 1000);
+
             } else {
                 pullChannel.ack(message);
             }
