@@ -5,12 +5,14 @@ import {Message} from "amqplib";
 import {isMaster, isWorker, fork} from 'cluster';
 import * as cluster from 'cluster';
 import {cpus} from 'os';
+import {readFileSync} from "fs";
 
 
 let pullQueueName: string = 'potential-ids',
     pushQueueName: string = 'verified-ids',
     baseUrl = 'https://www.strava.com/athletes/',
-
+    credentials = JSON.parse(readFileSync(__dirname + '/../credentials/credentials.json', 'utf-8')),
+    server = 'amqp://' + credentials.QUEUE.USER + ':' + credentials.QUEUE.PASSWORD + '@' + credentials.QUEUE.HOST,
     checkExistence = (message: Message, pullChannel: Channel, connection: Connection) => {
         let url = baseUrl + message.content.toString();
 
@@ -64,7 +66,7 @@ let pullQueueName: string = 'potential-ids',
     },
     worker = () => {
 
-        amqp.connect('amqp://localhost',
+        amqp.connect(server,
             (error, connection) => {
 
                 if (error) {

@@ -1,8 +1,12 @@
 import * as amqp from 'amqplib/callback_api'
 import {Channel, Connection} from "amqplib/callback_api";
+import {readFileSync} from "fs";
 
-let queueName = 'potential-ids',
-    lastKnownId = 27793488,
+let queueName: string = 'potential-ids',
+    lastKnownId: number = 27793488,
+    credentials = JSON.parse(readFileSync(__dirname + '/../credentials/credentials.json', 'utf-8')),
+    server = 'amqp://' + credentials.QUEUE.USER + ':' + credentials.QUEUE.PASSWORD + '@' + credentials.QUEUE.HOST,
+    //server:string = 'amqp://localhost',
     pushToQueue = (id: number, channel: Channel, connection: Connection) => {
 
         if (id % 100000 === 0) {
@@ -34,9 +38,9 @@ let queueName = 'potential-ids',
     };
 
 //  lastKnownId = 12000;
-
+console.log(server);
 amqp
-    .connect('amqp://localhost',
+    .connect(server,
         (error, connection) => {
 
             if (error) {
