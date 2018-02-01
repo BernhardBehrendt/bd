@@ -62,6 +62,6 @@ amqp
                     channel.assertQueue(queueName, {durable: true});
                     console.log('Send to queue');
 
-                    pushToQueue(18510, channel, connection);
+                    pushToQueue(37182, channel, connection);
                 });
         });
