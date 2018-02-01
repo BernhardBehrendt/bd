@@ -19,7 +19,7 @@ let queueName: string = 'potential-ids',
             if (id % 100000 === 0) {
                 setTimeout(() => {
                     pushToQueue(id + 1, channel, connection);
-                }, 10000);
+                }, 1000 * 25);
             } else {
                 process
                     .nextTick(() => {
